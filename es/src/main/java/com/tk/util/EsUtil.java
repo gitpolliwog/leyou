@@ -102,7 +102,6 @@ public  class EsUtil {
     }
     public static void search(org.elasticsearch.index.query.QueryBuilder queryBuilder) throws Exception{
         //执行查询
-
         SearchResponse searchResponse = client.prepareSearch("hello")
                 .setTypes("hello")
                 .setQuery(queryBuilder)
@@ -115,7 +114,6 @@ public  class EsUtil {
              SearchHit searchHit = iterator.next();
             //打印文档对象
             System.out.println(searchHit.getSourceAsString());
-
         }
 
         client.close();
