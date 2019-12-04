@@ -57,7 +57,7 @@
           name: "",
           image: "",
           letter: "",
-          categories: []
+          categories: [],
         },
         imageDialogVisible:false
       }
@@ -74,13 +74,15 @@
       submit() {
         // 表单校验
         if (this.$refs.brandForm.validate()) {
-          this.brand.categories = this.brand.categories.map(c => c.id);
+          this.brand.categories=this.brand.categories.map(c => c.id);
           this.brand.letter = this.brand.letter.toUpperCase();
           // 将数据提交到后台
+          console.log(this.$qs.stringify(this.brand))
+          console.log(JSON.stringify(this.brand))
           this.$http({
             method: this.isEdit ? 'put' : 'post',
             url: '/item/brand',
-            data: this.$qs.stringify(this.brand)
+            data: this.$qs.stringify(this.brand,{ indices: false })
           }).then(() => {
             // 关闭窗口
             this.$message.success("保存成功！");

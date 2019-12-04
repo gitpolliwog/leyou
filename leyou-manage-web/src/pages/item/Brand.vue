@@ -5,10 +5,11 @@
       <v-spacer/>
       <v-text-field
         append-icon="search"
+
         label="搜索"
         single-line
         hide-details
-        v-model="search"
+        v-model="key"
       />
     </v-card-title>
     <v-divider/>
@@ -70,7 +71,6 @@
 
 <script>
   import BrandForm from './BrandForm'
-  import {brandData} from '../../mockDB'
 
   export default {
     name: "brand",
@@ -79,7 +79,7 @@
     },
     data() {
       return {
-        search: '',// 过滤字段
+        key: '',// 过滤字段
         totalItems: 0,// 总条数
         items: [],// 表格数据
         loading: true,
@@ -93,7 +93,7 @@
         ],
         show: false,// 是否弹出窗口
         brand: {}, // 品牌信息
-        isEdit: false // 判断是编辑还是新增
+        isEdit: false, // 判断是编辑还是新增
       }
     },
     watch: {
@@ -103,7 +103,7 @@
         },
         deep: true
       },
-      search: {
+      key: {
         handler() {
           this.getDataFromApi();
         }
@@ -129,7 +129,7 @@
         this.isEdit = true;
         this.show = true;
         // 查询商品分类信息，进行回显
-        this.$http.get("/item/category/bid/" + item.id)
+        this.$http.get("/item/category/list/" + item.id)
           .then(resp => {
             this.brand.categories = resp.data;
           })
@@ -151,12 +151,21 @@
       },
       getDataFromApi() {
         this.loading = true;
-        // 200ms后返回假数据
-        window.setTimeout(() => {
-          this.items = brandData.slice(0,4);
-          this.totalItems = 100
+
+        this.$http.get("/item/brand/page",{
+          params : {
+            page : this.pagination.page,//当前页
+            rows : this.pagination.rowsPerPage,//每页大小
+            sortBy : this.pagination.sortBy,//排序字段
+            desc : this.pagination.descending,//是否降序
+            key : this.key//搜索条件
+          }
+        }).then(resp =>{
+          this.items =resp.data.items;
+          this.totalItems=resp.data.total;
           this.loading = false;
-        }, 200)
+        })
+
       }
     }
   }
