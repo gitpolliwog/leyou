@@ -30,9 +30,20 @@ public class BrandController  {
 
     @PostMapping
     public ResponseEntity <Void> saveBrand(Brand brand, @RequestParam("categories") List<Long> categories){
-              System.out.println(brand);
-              System.out.println(categories);
             brandService.saveBrand(brand,categories);
             return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @GetMapping("cid/{cid}")
+    public ResponseEntity<List<Brand>> queryBrandListByCid(@PathVariable("cid") Long cid ){
+        return ResponseEntity.ok( brandService.queryBrandListByCid(cid));
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<Brand> queryBrandById(@PathVariable("id") Long id ){
+        return ResponseEntity.ok( brandService.queryById(id));
+    }
+
+
+
 }

@@ -276,16 +276,18 @@ export default {
       handler(val) {
         // 判断商品分类是否存在，存在才查询
         if (val && val.length > 0) {
+          console.log(this.goods.categories)
           // 根据分类查询品牌
           this.$http
-            .get("/item/brand/cid/" + this.goods.categories[2].id)
+            .get("/item/brand/cid/" + this.goods.categories[0].id)
             .then(({ data }) => {
               this.brandOptions = data;
             });
           // 根据分类查询规格参数
           this.$http
-            .get("/item/spec/params?cid=" + this.goods.categories[2].id)
+            .get("/item/spec/params?cid=" + this.goods.categories[0].id)
             .then(({ data }) => {
+
               let specs = [];
               let template = [];
               if (this.isEdit){
@@ -311,6 +313,7 @@ export default {
                 }
               });
               this.specs = arr1;// 通用规格
+              console.log(specs)
               this.specialSpecs = arr2;// 特有规格
             });
         }
