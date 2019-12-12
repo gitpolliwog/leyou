@@ -15,6 +15,14 @@ zuul:
       path: /upload/**
       serviceId:  upload-service
       strip-prefix: false
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      ebook-interfaces: #服务提供者名字
+        connectTimeout: 5000
+          readTimeout: 5000
 ribbon:
   ConnectTimeout: 1000 # 连接超时时间(ms)
   ReadTimeout: 3500 # 通信超时时间(ms)
@@ -22,10 +30,10 @@ ribbon:
   MaxAutoRetries: 0 # 同一实例的重试次数
   eureka:
     enabled: true
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMillisecond: 5000 # 熔断超时时长：5000ms
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMillisecond: 5000 # 熔断超时时长：5000ms

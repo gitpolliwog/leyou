@@ -77,7 +77,7 @@ public class GoodsService {
     public SpuDetail queryDetailById(Long id) {
         SpuDetail detail = spuDetailMapper.selectByPrimaryKey(id);
         if(detail==null){
-            throw new LyException(ExceptionEnum.GOODS_NOT_FOUND);
+            throw new LyException(ExceptionEnum.SPU_DETAIL_NOT_FOUND);
         }
         return detail;
     }

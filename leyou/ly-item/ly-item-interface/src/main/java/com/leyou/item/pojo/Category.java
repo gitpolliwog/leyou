@@ -15,7 +15,7 @@ public class Category {
     private Long id;
     private String name;
     private Long parentId;
-    private boolean isParent;
+    private Boolean isParent;
     private Integer sort;
 
 }
